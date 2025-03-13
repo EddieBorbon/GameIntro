@@ -8,10 +8,9 @@ const SPEED = 480;
 // Initialize Kaboom.js
 kaboom();
 
-
-loadSprite("player", "sprites/character.png");
-
-
+// Load assets
+loadSprite("player", "sprites/character.png"); // Player sprite
+loadSprite("background", "sprites/background.png"); // Background sprite
 
 // Global variables for audio analysis
 let isMicrophoneAccessGranted = false;
@@ -52,7 +51,7 @@ async function initMicrophone(player) {
         BASE_JUMP_FORCE + (averageFrequency / bufferLength) * (MAX_JUMP_FORCE - BASE_JUMP_FORCE);
 
       // Jump if a tone is detected and the player is on the ground
-      if (averageFrequency > 20 && player.isGrounded()) {
+      if (averageFrequency > 30 && player.isGrounded()) {
         player.jump(jumpForce);
       }
     });
@@ -64,12 +63,19 @@ async function initMicrophone(player) {
 
 // Main game scene
 scene("game", () => {
+  // Add background
+  add([
+    sprite("background"), // Use the loaded background sprite
+    pos(0, 0),
+    scale(width() / 1920, height() / 1080), // Scale to fit screen (adjust based on your image size)
+  ]);
+
   setGravity(1600);
 
   // Player with sprite
   const player = add([
-    sprite("player"), // Use the loaded sprite
-    pos(80, 80),
+    sprite("player"), // Use the loaded player sprite
+    pos(0,0),
     area(),
     body(),
     scale(0.3), // Adjust the size of the sprite if necessary
@@ -109,7 +115,7 @@ scene("game", () => {
       "tree", // Tag for collision detection
     ]);
 
-    wait(rand(1.5, 5), spawnTree); // Wait a random amount of time before generating another obstacle
+    wait(rand(1.5, 3), spawnTree); // Wait a random amount of time before generating another obstacle
   }
 
   spawnTree();
@@ -142,7 +148,7 @@ scene("lose", (score) => {
   add([
     sprite("player"),
     pos(width() / 2, height() / 2 - 80),
-    scale(1),
+    scale(2),
     anchor("center"),
   ]);
 
