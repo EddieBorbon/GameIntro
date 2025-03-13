@@ -6,7 +6,10 @@ const MAX_JUMP_FORCE = 3000; // Maximum jump force
 const SPEED = 480;
 
 // Initialize Kaboom.js
-kaboom();
+kaboom({
+  scale: 1,
+  background: [255, 255, 255], // White background
+});
 
 // Load assets
 loadSprite("player", "sprites/character.png"); // Player sprite
